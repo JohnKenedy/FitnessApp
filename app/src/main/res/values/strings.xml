@@ -2,4 +2,6 @@
     <string name="app_name">FitnessApp</string>
     <string name="image">image</string>
     <string name="str_start">Start</string>
+    <string name="get_ready">GET READY FOR</string>
+    <string name="exercise_now">Exercise Now</string>
 </resources>
