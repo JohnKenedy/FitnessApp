@@ -16,6 +16,9 @@ class ExerciseActivity : AppCompatActivity() {
     private var exerciseTimer: CountDownTimer? = null
     private var exerciseProgress = 0
 
+    private var exerciseList: ArrayList<ExerciseModel>? = null
+    private var currentExercisePosition = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exercise)
@@ -29,6 +32,7 @@ class ExerciseActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+        exerciseList = Constants.defaultExerciseList()
         setupRestView()
     }
 
@@ -51,16 +55,23 @@ class ExerciseActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-          setupExerciseView()
+                currentExercisePosition++
+                setupExerciseView()
             }
         }.start()
     }
 
     private fun setupRestView() {
+
+        llRestView.visibility = View.VISIBLE
+        llExerciseView.visibility = View.GONE
+
         if (restTimer != null) {
             restTimer!!.cancel()
             restProgress = 0
         }
+
+        tvUpcomingExerciseName.text = exerciseList!![currentExercisePosition +1].getName()
 
         setRestProgressBar()
     }
@@ -75,11 +86,15 @@ class ExerciseActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                Toast.makeText(
-                    this@ExerciseActivity,
-                    "Congratulations John",
-                    Toast.LENGTH_LONG
-                ).show()
+                if (currentExercisePosition < exerciseList?.size!! -1) {
+                    setupRestView()
+                } else {
+                    Toast.makeText(
+                        this@ExerciseActivity,
+                        "See Myself Tomorrow :3",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }.start()
     }
@@ -95,6 +110,9 @@ class ExerciseActivity : AppCompatActivity() {
         }
 
         setExerciseProgressBar()
+
+        ivImage.setImageResource(exerciseList!![currentExercisePosition].getImage())
+        tvExerciseName.text = exerciseList!![currentExercisePosition].getName()
     }
 
 }

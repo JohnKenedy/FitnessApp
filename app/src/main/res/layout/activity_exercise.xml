@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_app"
+    android:background="@color/bg_exercise"
     android:orientation="vertical"
     tools:context=".ExerciseActivity">
 
@@ -85,6 +85,26 @@
 
         </FrameLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/montserrat_light"
+            android:text="@string/upcoming_exercise"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvUpcomingExerciseName"
+            android:layout_width="wrap_content"
+            android:textAllCaps="true"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/dark"
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_medium"
+            tools:text="Exercise Name"
+            android:textSize="22sp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -92,13 +112,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_exercise_activity"
+        android:background="@color/bg_exercise"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="invisible">
 
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/ivImage"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginBottom="20dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/i" />
+
         <TextView
+            android:id="@+id/tvExerciseName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="true"
             android:fontFamily="@font/montserrat_medium"
             android:text="@string/exercise_now"
             android:textColor="@color/dark"

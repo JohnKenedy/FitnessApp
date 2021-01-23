@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btn_start.setOnClickListener { Toast.makeText(this, "Here we will start the exercise", Toast.LENGTH_SHORT).show()
+        btn_start.setOnClickListener {
             val intent = Intent(this, ExerciseActivity::class.java)
             startActivity(intent)
         }
