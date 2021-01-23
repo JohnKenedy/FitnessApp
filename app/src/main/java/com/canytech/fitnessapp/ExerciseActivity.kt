@@ -2,12 +2,15 @@ package com.canytech.fitnessapp
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.speech.tts.TextToSpeech
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_exercise.*
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ExerciseActivity : AppCompatActivity() {
+class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private val exerciseTimerDuration: Long = 60
     private var restTimer: CountDownTimer? = null
@@ -18,6 +21,8 @@ class ExerciseActivity : AppCompatActivity() {
 
     private var exerciseList: ArrayList<ExerciseModel>? = null
     private var currentExercisePosition = -1
+
+    private var tts: TextToSpeech? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +37,8 @@ class ExerciseActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+        tts = TextToSpeech(this, this)
+
         exerciseList = Constants.defaultExerciseList()
         setupRestView()
     }
@@ -40,6 +47,16 @@ class ExerciseActivity : AppCompatActivity() {
         if (restTimer != null) {
             restTimer!!.cancel()
             restProgress = 0
+        }
+
+        if (exerciseTimer != null) {
+            exerciseTimer!!.cancel()
+            exerciseProgress = 0
+        }
+
+        if (tts!= null) {
+            tts!!.stop()
+            tts!!.shutdown()
         }
 
         super.onDestroy()
@@ -62,7 +79,7 @@ class ExerciseActivity : AppCompatActivity() {
     }
 
     private fun setupRestView() {
-
+        speakOut("Get Ready" )
         llRestView.visibility = View.VISIBLE
         llExerciseView.visibility = View.GONE
 
@@ -109,10 +126,26 @@ class ExerciseActivity : AppCompatActivity() {
             exerciseProgress = 0
         }
 
+        speakOut(exerciseList!![currentExercisePosition].getName())
+
         setExerciseProgressBar()
 
         ivImage.setImageResource(exerciseList!![currentExercisePosition].getImage())
         tvExerciseName.text = exerciseList!![currentExercisePosition].getName()
+    }
+
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            val result = tts!!.setLanguage(Locale.US)
+            when (result) {
+                TextToSpeech.LANG_MISSING_DATA, TextToSpeech.LANG_NOT_SUPPORTED -> {
+                }
+            }
+        }
+    }
+
+    private fun speakOut(text: String) {
+        tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
     }
 
 }
