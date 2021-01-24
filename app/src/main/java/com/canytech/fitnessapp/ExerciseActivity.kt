@@ -1,5 +1,6 @@
 package com.canytech.fitnessapp
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.speech.tts.TextToSpeech
@@ -23,6 +24,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var currentExercisePosition = -1
 
     private var tts: TextToSpeech? = null
+    private var player: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,16 +61,20 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             tts!!.shutdown()
         }
 
+        if (player != null) {
+            player!!.stop()
+        }
+
         super.onDestroy()
     }
 
     private fun setRestProgressBar() {
         progressBar.progress = restProgress
-        restTimer = object : CountDownTimer(10000, 1000) {
+        restTimer = object : CountDownTimer(30000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 restProgress++
-                progressBar.progress = 10 - restProgress
-                tvTimer.text = (10 - restProgress).toString()
+                progressBar.progress = 30 - restProgress
+                tvTimer.text = (30 - restProgress).toString()
             }
 
             override fun onFinish() {
@@ -83,12 +89,20 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         llRestView.visibility = View.VISIBLE
         llExerciseView.visibility = View.GONE
 
+        try {
+            player = MediaPlayer.create(applicationContext, R.raw.next)
+            player!!.isLooping = true
+            player!!.start()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         if (restTimer != null) {
             restTimer!!.cancel()
             restProgress = 0
         }
 
-        tvUpcomingExerciseName.text = exerciseList!![currentExercisePosition +1].getName()
+        tvUpcomingExerciseName.text = exerciseList!![currentExercisePosition + 1].getName()
 
         setRestProgressBar()
     }
@@ -103,7 +117,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
 
             override fun onFinish() {
-                if (currentExercisePosition < exerciseList?.size!! -1) {
+                if (currentExercisePosition < exerciseList?.size!! - 1) {
                     setupRestView()
                 } else {
                     Toast.makeText(
@@ -126,6 +140,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             exerciseProgress = 0
         }
 
+        player!!.stop()
         speakOut(exerciseList!![currentExercisePosition].getName())
 
         setExerciseProgressBar()

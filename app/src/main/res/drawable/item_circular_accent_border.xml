@@ -6,6 +6,6 @@
         android:width="5dp"
         android:color="@color/red" />
 
-    <solid android:color="@color/bg_app" />
+    <solid android:color="@color/dark" />
 
 </shape>

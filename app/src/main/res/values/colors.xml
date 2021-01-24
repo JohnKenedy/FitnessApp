@@ -12,4 +12,5 @@
     <color name="dark">#252525</color>
     <color name="red">#EE1000</color>
     <color name="bg_exercise">#F6F6F7</color>
+    <color name="noColor">#00FFFFFF</color>
 </resources>
