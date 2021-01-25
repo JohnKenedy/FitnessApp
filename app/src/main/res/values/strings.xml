@@ -13,4 +13,6 @@
     <string name="make_choice">make your choice</string>
     <string name="yes">YES</string>
     <string name="nop">NOP</string>
+    <string name="bmi">BMI</string>
+    <string name="historic">HISTORIC</string>
 </resources>
