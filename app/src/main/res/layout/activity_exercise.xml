@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -89,22 +90,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textColor="@color/bg_app"
             android:fontFamily="@font/montserrat_light"
             android:text="@string/upcoming_exercise"
+            android:textColor="@color/bg_app"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tvUpcomingExerciseName"
             android:layout_width="wrap_content"
-            android:textAllCaps="true"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
             android:fontFamily="@font/montserrat_medium"
-            tools:text="Exercise Name"
-            android:textSize="22sp" />
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            tools:text="Exercise Name" />
 
     </LinearLayout>
 
@@ -116,23 +117,31 @@
         android:background="@color/dark"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="invisible">
+        android:visibility="visible">
 
-        <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/ivImage"
+        <androidx.cardview.widget.CardView
             android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_marginBottom="20dp"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/i" />
+            android:layout_height="200dp"
+            android:layout_marginBottom="80dp"
+            app:cardCornerRadius="10dp">
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/ivImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="20dp"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/bushpress" />
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/tvExerciseName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAllCaps="true"
             android:fontFamily="@font/montserrat_medium"
             android:text="@string/exercise_now"
+            android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -178,5 +187,15 @@
         </FrameLayout>
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvExerciseStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_exercise_status"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"/>
 
 </RelativeLayout>
