@@ -113,11 +113,12 @@
         android:id="@+id/llExerciseView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/rvExerciseStatus"
         android:layout_below="@+id/toolbar_exercise_activity"
         android:background="@color/dark"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <androidx.cardview.widget.CardView
             android:layout_width="300dp"

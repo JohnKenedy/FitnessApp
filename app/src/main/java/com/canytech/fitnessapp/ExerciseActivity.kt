@@ -1,22 +1,25 @@
 package com.canytech.fitnessapp
 
+import android.app.Dialog
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.speech.tts.TextToSpeech
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_exercise.*
+import kotlinx.android.synthetic.main.dialog_custom_back_confimation.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
-    private val exerciseTimerDuration: Long = 60
+    private var restTimerDuration : Long = 1
     private var restTimer: CountDownTimer? = null
     private var restProgress = 0
 
+    private val exerciseTimerDuration: Long = 1
     private var exerciseTimer: CountDownTimer? = null
     private var exerciseProgress = 0
 
@@ -25,6 +28,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = null
     private var player: MediaPlayer? = null
+
+    private var exerciseAdapter: ExerciseStatusAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,13 +41,16 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             actionbar.setDisplayHomeAsUpEnabled(true)
         }
         toolbar_exercise_activity.setNavigationOnClickListener {
-            onBackPressed()
+            customDialogForBackButton()
         }
 
         tts = TextToSpeech(this, this)
 
         exerciseList = Constants.defaultExerciseList()
+
         setupRestView()
+
+        setupExerciseStatusRecyclerView()
     }
 
     override fun onDestroy() {
@@ -56,7 +64,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             exerciseProgress = 0
         }
 
-        if (tts!= null) {
+        if (tts != null) {
             tts!!.stop()
             tts!!.shutdown()
         }
@@ -70,7 +78,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun setRestProgressBar() {
         progressBar.progress = restProgress
-        restTimer = object : CountDownTimer(30000, 1000) {
+        restTimer = object : CountDownTimer(restTimerDuration * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 restProgress++
                 progressBar.progress = 30 - restProgress
@@ -79,13 +87,17 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             override fun onFinish() {
                 currentExercisePosition++
+
+                exerciseList!![currentExercisePosition].setIsSelected(true)
+                exerciseAdapter!!.notifyDataSetChanged()
+
                 setupExerciseView()
             }
         }.start()
     }
 
     private fun setupRestView() {
-        speakOut("Get Ready" )
+        speakOut("Get Ready")
         llRestView.visibility = View.VISIBLE
         llExerciseView.visibility = View.GONE
 
@@ -118,13 +130,14 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             override fun onFinish() {
                 if (currentExercisePosition < exerciseList?.size!! - 1) {
+                    exerciseList!![currentExercisePosition].setIsSelected(false)
+                    exerciseList!![currentExercisePosition].setIsCompleted(true)
+                    exerciseAdapter!!.notifyDataSetChanged()
                     setupRestView()
                 } else {
-                    Toast.makeText(
-                        this@ExerciseActivity,
-                        "See Myself Tomorrow :3",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    finish()
+                    val intent = Intent(this@ExerciseActivity, FinishActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }.start()
@@ -161,6 +174,29 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun speakOut(text: String) {
         tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
+    }
+
+    private fun setupExerciseStatusRecyclerView() {
+        rvExerciseStatus.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL, false
+        )
+        exerciseAdapter = ExerciseStatusAdapter(exerciseList!!, this)
+        rvExerciseStatus.adapter = exerciseAdapter
+    }
+
+    private fun customDialogForBackButton() {
+        val customDialog = Dialog(this)
+
+        customDialog.setContentView(R.layout.dialog_custom_back_confimation)
+        customDialog.btnYes.setOnClickListener {
+            finish()
+            customDialog.dismiss()
+        }
+        customDialog.btnNo.setOnClickListener {
+            customDialog.dismiss()
+        }
+        customDialog.show()
     }
 
 }

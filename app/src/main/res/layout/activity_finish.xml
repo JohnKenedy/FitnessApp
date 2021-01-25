@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FinishActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_finish_activity"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingEnd="60dp"
+            android:src="@drawable/pngegg" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/tvEnd"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/dark"
+        android:textSize="35sp"
+        android:text="@string/end"
+        android:layout_gravity="center"
+        android:fontFamily="@font/montserrat_medium"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="380dp"
+        android:paddingTop="25dp"
+        android:src="@drawable/finish"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:text="@string/congratulations"
+        android:fontFamily="@font/montserrat_medium"
+        android:textColor="@color/dark"
+        android:layout_margin="20dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnFinish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:textColor="@color/dark"
+        android:fontFamily="@font/montserrat_medium"
+        android:background="@drawable/btn_bg"
+        android:text="@string/finish" />
+
+</LinearLayout>

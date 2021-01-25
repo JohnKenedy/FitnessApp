@@ -5,4 +5,12 @@
     <string name="get_ready">GET READY FOR</string>
     <string name="exercise_now">Exercise Now</string>
     <string name="upcoming_exercise">UPCOMING EXERCISE</string>
+    <string name="congratulations">Congratulations!\nYou have finished the workout!</string>
+    <string name="finish">FINISH</string>
+    <string name="end">END</string>
+    <string name="are_you_sure">ARE YOU SURE?</string>
+    <string name="stop_workout">This will stop workout. You\'ve come this far, are you sure you want to quit?</string>
+    <string name="make_choice">make your choice</string>
+    <string name="yes">YES</string>
+    <string name="nop">NOP</string>
 </resources>
