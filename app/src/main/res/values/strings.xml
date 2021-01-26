@@ -15,4 +15,11 @@
     <string name="nop">NOP</string>
     <string name="bmi">BMI</string>
     <string name="historic">HISTORIC</string>
+    <string name="weight">Weight (Kg)</string>
+    <string name="height">Height (cm)</string>
+    <string name="your_bmi">YOUR BMI</string>
+    <string name="calculate">CALCULATE</string>
+    <string name="calculate_bmi">Calculate Your BMI</string>
+    <string name="metrics_units">METRIC UNITS</string>
+    <string name="us_units">US UNITS</string>
 </resources>

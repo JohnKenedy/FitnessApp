@@ -15,11 +15,11 @@ import java.util.*
 
 class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
-    private var restTimerDuration : Long = 30
+    private var restTimerDuration : Long = 40
     private var restTimer: CountDownTimer? = null
     private var restProgress = 0
 
-    private val exerciseTimerDuration: Long = 60
+    private val exerciseTimerDuration: Long = 40
     private var exerciseTimer: CountDownTimer? = null
     private var exerciseProgress = 0
 
